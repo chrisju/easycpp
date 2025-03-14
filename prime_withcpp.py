@@ -4,7 +4,6 @@
 import sys, os
 import timeit
 
-'''
 import withcpp
 
 withcpp('''
@@ -33,25 +32,6 @@ int sieve(int n) {
 
 
 ''', 'sieve;', 'g++ -O2')
-
-'''
-
-def sieve(n):
-    # 初始化一个布尔值列表，所有数默认是质数（True）
-    is_prime = [True] * (n + 1)
-    is_prime[0] = is_prime[1] = False  # 0 和 1 不是质数
-
-    # 从 2 开始筛选所有质数
-    for i in range(2, int(n ** 0.5) + 1):  # 只需要筛到 sqrt(n)
-        if is_prime[i]:  # 如果当前数是质数
-            for j in range(i * i, n + 1, i):  # 从 i^2 开始，标记所有 i 的倍数
-                is_prime[j] = False
-
-    # 返回所有质数
-    primes = [i for i in range(2, n + 1) if is_prime[i]]
-    #return len(primes), primes[-1]
-    return len(primes)
-
 
 
 n = 10**6
