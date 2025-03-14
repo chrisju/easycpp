@@ -4,7 +4,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setup(
-    name="withcpp",  # 模块的名称
+    name="easycpp",  # 模块的名称
     version="1.0.0",  # 版本号
     packages=find_packages(),  # 自动查找目录中的包
     description="Enjoyably using embedded C++ code or dynamic libraries",  # 简介

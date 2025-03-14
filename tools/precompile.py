@@ -1,15 +1,15 @@
 import re
 import os
 import sys
-from withcpp import withcpp
+from easycpp import withcpp
 
 def extract_cpp_code(py_file):
     """从 Python 文件中提取 C++ 代码块"""
     with open(py_file, "r", encoding="utf-8") as f:
         content = f.read()
     
-    # 解析 `withcpp('...'` 形式的 C++ 代码块
-    match = re.search(r"withcpp\(\s*'''(.*?)'''\s*,\s*'(.*?)'", content, re.DOTALL)
+    # 解析 `easycpp('...'` 形式的 C++ 代码块
+    match = re.search(r"easycpp\(\s*'''(.*?)'''\s*,\s*'(.*?)'", content, re.DOTALL)
     
     if match:
         cpp_code = match.group(1).strip()
@@ -22,7 +22,7 @@ def precompile(py_file):
     cpp_code, func_signatures = extract_cpp_code(py_file)
     if cpp_code:
         print(f"发现 C++ 代码，开始编译: {py_file}")
-        withcpp(cpp_code, func_signatures)
+        easycpp(cpp_code, func_signatures)
         print(f"预编译完成: {py_file}")
     else:
         print(f"未发现 C++ 代码: {py_file}")
