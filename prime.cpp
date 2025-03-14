@@ -7,7 +7,7 @@ using namespace chrono;
 
 int rn = 0;
 int rmax = 0;
-void sieve(int n) {
+int sieve(int n) {
     vector<bool> prime(n + 1, true);
     prime[0] = prime[1] = false;
 
@@ -19,10 +19,10 @@ void sieve(int n) {
         }
     }
 
-    // 输出所有质数
     for (int i = 2; i <= n; ++i) {
         if (prime[i]) rn++,rmax=i;
     }
+    return rn;
 }
 
 int main() {
