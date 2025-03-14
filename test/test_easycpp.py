@@ -73,5 +73,5 @@ print(f"C++ 函数: {globals()['sieve']}")
 execution_times = timeit.repeat('l=sieve(n)', setup='from __main__ import n,sieve', repeat=5, number=1)
 for i, exec_time in enumerate(execution_times, 1):
     print(f"第 {i} 次执行时间: {exec_time*1000000} 微秒")
-rn = pysieve(n)
+rn = sieve(n)
 print(f'count:{rn}')
