@@ -40,8 +40,8 @@ int sieve(int n, int *end) {
 ''', 'sieve;')
 
 # 定义函数的参数类型和返回值类型
-sieve.argtypes = [c_int, POINTER(c_int)]
-sieve.restype = c_int
+#sieve.argtypes = [c_int, POINTER(c_int)]
+#sieve.restype = c_int
 
 
 def pysieve(n):
