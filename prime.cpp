@@ -1,4 +1,4 @@
-// g++ -O2 prime.cpp -o cppfib
+// g++ -O2 prime.cpp
 #include <iostream>
 #include <chrono> // 用于计时
 #include <vector>
