@@ -1,7 +1,12 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 import re
 import os
 import sys
-from easycpp import withcpp
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "easycpp")))
+from easycpp import easycpp
 
 def extract_cpp_code(py_file):
     """从 Python 文件中提取 C++ 代码块"""

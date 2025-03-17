@@ -5,7 +5,6 @@ import sys, os
 import timeit
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "easycpp")))
-
 from easycpp import easycpp
 
 easycpp('''
