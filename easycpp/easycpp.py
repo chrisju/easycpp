@@ -11,7 +11,7 @@ class Easycpp:
     pass
 
 def get_caller_args():
-    frameinfo = inspect.stack()[2]
+    frameinfo = inspect.stack()[3]
     sig = inspect.signature(frameinfo.frame.f_globals[frameinfo.function])  # 获取函数签名
     args = {k: frameinfo.frame.f_locals[k] for k in sig.parameters}  # 只获取参数
     return args
@@ -25,11 +25,19 @@ def get_functions(so_path):
 
 
 def easycpp(code_or_so, so_dir="", func_signatures=None, compiler="g++ -O2 -shared -fPIC"):
-    prebuild = False
+    if DEBUG:
+        for frame in inspect.stack():
+            print(frame.function, frame.filename)  # 打印调用栈中的函数名
 
     caller = inspect.stack()[1]
-    if caller.function == "precompile":
+    if caller.filename == "<string>":
+        # using exec
+        caller = inspect.stack()[2]
+
+    prebuild = False
+    if  caller.function == "precompile":
         prebuild = True
+    if DEBUG: print(f"prebuild mode: {prebuild}")
 
     if not so_dir:
         # same dir to the .py who using easycpp
