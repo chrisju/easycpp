@@ -1,23 +1,24 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-# 带参数使用
+# 测试多段c++代码,以及so
 import sys, os
 import timeit
 from ctypes import POINTER, c_int, byref
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "easycpp")))
-import easycpp
+from easycpp import easycpp
+import easycpp as esp
 
 
-easycpp.DEBUG = True
-cpp = easycpp.easycpp('''
+esp.DEBUG = True
+cpp1 = easycpp('''
 #include <vector>
 using namespace std;
 
-extern "C" int sieve(int n, int *end);
+extern "C" int sieve1(int n, int *end);
 
-int sieve(int n, int *end) {
+int sieve1(int n, int *end) {
     vector<bool> prime(n + 1, true);
     prime[0] = prime[1] = false;
 
@@ -39,11 +40,40 @@ int sieve(int n, int *end) {
 }
 
 
-''', '/tmp', 'sieve;', "g++ -O3 -g -shared -fPIC")
+''', '/tmp', 'sieve1;', "g++ -O3 -g -shared -fPIC")
 
-# 如果需要可以定义函数的参数类型和返回值类型
-#cpp.sieve.argtypes = [c_int, POINTER(c_int)]
-#cpp.sieve.restype = c_int
+cpp2 = easycpp('''
+#include <vector>
+using namespace std;
+
+extern "C" int sieve2(int n);
+
+int sieve2(int n) {
+    vector<bool> prime(n + 1, true);
+    prime[0] = prime[1] = false;
+
+    for (int i = 2; i * i <= n; ++i) {
+        if (prime[i]) {
+            for (int j = i * i; j <= n; j += i) {
+                prime[j] = false;
+            }
+        }
+    }
+
+    int rn = 0;
+    int rmax = 0;
+    for (int i = 2; i <= n; ++i) {
+        if (prime[i]) rn++,rmax=i;
+    }
+    return rn;
+}
+
+
+''')
+
+# 测试使用现有so
+cpp3 = easycpp('test/easycpp_8da973ce2166f141c895cc95818c29f9.so')
+
 
 
 def pysieve(n):
@@ -69,18 +99,16 @@ print(f'python:sieve({n})')
 rn, rmax = pysieve(n)
 print(f'count:{rn} bigest:{rmax}')
 
-print(f'cpp: sieve({n})')
+print(f'cpp1: sieve({n})')
 rmax = c_int()   # 创建一个 c_int 变量，用于传递给函数
-rn = cpp.sieve(n, byref(rmax))
+rn = cpp1.sieve1(n, byref(rmax))
 print(f'count:{rn} bigest:{rmax}')
 
+print(f'cpp2: sieve({n})')
+rn = cpp2.sieve2(n)
+print(f'count:{rn}')
 
-print(f'python:sieve({n})')
-execution_times = timeit.repeat('l=pysieve(n)', setup='from __main__ import n,pysieve', repeat=5, number=1)
-for i, exec_time in enumerate(execution_times, 1):
-    print(f"第 {i} 次执行时间: {exec_time*1000000} 微秒")
+print(f'cpp3(so): sieve({n})')
+rn = cpp3.sieve(n)
+print(f'count:{rn}')
 
-print(f'cpp: sieve({n})')
-execution_times = timeit.repeat('l=cpp.sieve(n,byref(rmax))', setup='from __main__ import n,cpp,rmax,byref', repeat=5, number=1)
-for i, exec_time in enumerate(execution_times, 1):
-    print(f"第 {i} 次执行时间: {exec_time*1000000} 微秒")

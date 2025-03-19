@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+# 简易使用
 import sys, os
 import timeit
 
@@ -51,7 +52,6 @@ def pysieve(n):
 
     # 返回所有质数
     primes = [i for i in range(2, n + 1) if is_prime[i]]
-    #return len(primes), primes[-1]
     return len(primes)
 
 
