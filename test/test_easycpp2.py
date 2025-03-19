@@ -8,7 +8,7 @@ from ctypes import POINTER, c_int, byref
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "easycpp")))
 from easycpp import easycpp
 
-easycpp('''
+cpp = easycpp('''
 #include <vector>
 using namespace std;
 
@@ -62,21 +62,22 @@ def pysieve(n):
 
 n = 10**6
 
+print(f'python:sieve({n})')
+rn, rmax = pysieve(n)
+print(f'count:{rn} bigest:{rmax}')
+
+print(f'cpp: sieve({n})')
+rmax = c_int()   # 创建一个 c_int 变量，用于传递给函数
+rn = cpp.sieve(n, byref(rmax))
+print(f'count:{rn} bigest:{rmax}')
+
 
 print(f'python:sieve({n})')
 execution_times = timeit.repeat('l=pysieve(n)', setup='from __main__ import n,pysieve', repeat=5, number=1)
 for i, exec_time in enumerate(execution_times, 1):
     print(f"第 {i} 次执行时间: {exec_time*1000000} 微秒")
-rn, rmax = pysieve(n)
-print(f'count:{rn} bigest:{rmax}')
-
 
 print(f'cpp: sieve({n})')
-print("当前 globals():", globals().keys())
-print(f"C++ 函数: {globals()['sieve']}")
-rmax = c_int()   # 创建一个 c_int 变量，用于传递给函数
-execution_times = timeit.repeat('l=sieve(n,byref(rmax))', setup='from __main__ import n,sieve,rmax,byref', repeat=5, number=1)
+execution_times = timeit.repeat('l=cpp.sieve(n,byref(rmax))', setup='from __main__ import n,cpp,rmax,byref', repeat=5, number=1)
 for i, exec_time in enumerate(execution_times, 1):
     print(f"第 {i} 次执行时间: {exec_time*1000000} 微秒")
-rn = sieve(n, byref(rmax))
-print(f'count:{rn} bigest:{rmax}')

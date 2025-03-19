@@ -7,7 +7,8 @@ import timeit
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "easycpp")))
 from easycpp import easycpp
 
-easycpp('''
+
+cpp = easycpp('''
 #include <vector>
 using namespace std;
 
@@ -57,20 +58,22 @@ def pysieve(n):
 
 n = 10**6
 
+print(f'python:sieve({n})')
+rn = pysieve(n)
+print(f'count:{rn}')
+
+print(f'cpp: sieve({n})')
+rn = cpp.sieve(n)
+print(f'count:{rn}')
+
 
 print(f'python:sieve({n})')
 execution_times = timeit.repeat('l=pysieve(n)', setup='from __main__ import n,pysieve', repeat=5, number=1)
 for i, exec_time in enumerate(execution_times, 1):
     print(f"第 {i} 次执行时间: {exec_time*1000000} 微秒")
-rn = pysieve(n)
-print(f'count:{rn}')
 
 
 print(f'cpp: sieve({n})')
-print("当前 globals():", globals().keys())
-print(f"C++ 函数: {globals()['sieve']}")
-execution_times = timeit.repeat('l=sieve(n)', setup='from __main__ import n,sieve', repeat=5, number=1)
+execution_times = timeit.repeat('l=cpp.sieve(n)', setup='from __main__ import n,cpp', repeat=5, number=1)
 for i, exec_time in enumerate(execution_times, 1):
     print(f"第 {i} 次执行时间: {exec_time*1000000} 微秒")
-rn = sieve(n)
-print(f'count:{rn}')
