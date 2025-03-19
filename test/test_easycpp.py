@@ -35,7 +35,7 @@ int sieve(int n) {
 }
 
 
-''', 'sieve;')
+''')
 
 
 def pysieve(n):

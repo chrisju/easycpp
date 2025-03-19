@@ -6,9 +6,11 @@ import timeit
 from ctypes import POINTER, c_int, byref
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "easycpp")))
-from easycpp import easycpp
+import easycpp
 
-cpp = easycpp('''
+
+easycpp.DEBUG = True
+cpp = easycpp.easycpp('''
 #include <vector>
 using namespace std;
 
@@ -36,11 +38,11 @@ int sieve(int n, int *end) {
 }
 
 
-''', 'sieve;')
+''', '/tmp', 'sieve;', "g++ -O3 -g -shared -fPIC")
 
-# 定义函数的参数类型和返回值类型
-#sieve.argtypes = [c_int, POINTER(c_int)]
-#sieve.restype = c_int
+# 如果需要可以定义函数的参数类型和返回值类型
+#cpp.sieve.argtypes = [c_int, POINTER(c_int)]
+#cpp.sieve.restype = c_int
 
 
 def pysieve(n):

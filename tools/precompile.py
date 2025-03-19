@@ -13,7 +13,8 @@ def extract_cpp_code(py_file):
     with open(py_file, "r", encoding="utf-8") as f:
         content = f.read()
     
-    # 解析 `easycpp('...'` 形式的 C++ 代码块
+    # 解析 `easycpp('...'` 形式的 C++ 代码块 TODO fix TODO multi calls
+    #match = re.search(r"easycpp\(\s*'''(.*?)'''\s*,\s*'(.*?)'", content, re.DOTALL)
     match = re.search(r"easycpp\(\s*'''(.*?)'''\s*,\s*'(.*?)'", content, re.DOTALL)
     
     if match:
@@ -37,10 +38,10 @@ if __name__ == "__main__":
         print("用法: python precompile.py <your_script.py>")
         sys.exit(1)
     
-    py_file = sys.argv[1]
-    if not os.path.exists(py_file):
-        print(f"文件不存在: {py_file}")
-        sys.exit(1)
-    
-    precompile(py_file)
+    for py_file in sys.argv:
+        if not os.path.exists(py_file):
+            print(f"文件不存在: {py_file}")
+            sys.exit(1)
+
+        precompile(py_file)
 
