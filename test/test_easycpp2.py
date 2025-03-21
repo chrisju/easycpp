@@ -6,7 +6,7 @@ import sys, os
 import timeit
 from ctypes import POINTER, c_int, byref
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "easycpp")))
+#sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "easycpp")))
 import easycpp
 
 
