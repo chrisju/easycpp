@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 
 # 测试多段c++代码,以及so (必须先运行test/test_easycpp.py)
+# TODO translate
+# TODO 中文逗号句号等会翻译吗？看README
 import sys, os
 import timeit
 from ctypes import POINTER, c_int, byref

@@ -3,8 +3,6 @@ from setuptools import setup, find_packages
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
-# TODO translate
-# TODO 中文逗号句号等会翻译吗？看README
 setup(
     name="easycpp",  # 模块的名称
     version="1.0.0",  # 版本号
