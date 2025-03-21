@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-# 简易使用
+# simply use
 import sys, os
 import timeit
 
@@ -40,17 +40,14 @@ int sieve(int n) {
 
 
 def pysieve(n):
-    # 初始化一个布尔值列表，所有数默认是质数（True）
     is_prime = [True] * (n + 1)
-    is_prime[0] = is_prime[1] = False  # 0 和 1 不是质数
+    is_prime[0] = is_prime[1] = False
 
-    # 从 2 开始筛选所有质数
-    for i in range(2, int(n ** 0.5) + 1):  # 只需要筛到 sqrt(n)
-        if is_prime[i]:  # 如果当前数是质数
-            for j in range(i * i, n + 1, i):  # 从 i^2 开始，标记所有 i 的倍数
+    for i in range(2, int(n ** 0.5) + 1):
+        if is_prime[i]:
+            for j in range(i * i, n + 1, i):
                 is_prime[j] = False
 
-    # 返回所有质数
     primes = [i for i in range(2, n + 1) if is_prime[i]]
     return len(primes)
 
@@ -70,10 +67,10 @@ print(f'count:{rn}')
 print(f'python:sieve({n})')
 execution_times = timeit.repeat('l=pysieve(n)', setup='from __main__ import n,pysieve', repeat=5, number=1)
 for i, exec_time in enumerate(execution_times, 1):
-    print(f"第 {i} 次执行时间: {exec_time*1000000} 微秒")
+    print(f"{i}. : {exec_time*1000000}  microseconds ")
 
 
 print(f'cpp: sieve({n})')
 execution_times = timeit.repeat('l=cpp.sieve(n)', setup='from __main__ import n,cpp', repeat=5, number=1)
 for i, exec_time in enumerate(execution_times, 1):
-    print(f"第 {i} 次执行时间: {exec_time*1000000} 微秒")
+    print(f"{i}. : {exec_time*1000000}  microseconds ")

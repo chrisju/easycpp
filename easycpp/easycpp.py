@@ -12,8 +12,8 @@ class Easycpp:
 
 def get_caller_args():
     frameinfo = inspect.stack()[3]
-    sig = inspect.signature(frameinfo.frame.f_globals[frameinfo.function])  # 获取函数签名
-    args = {k: frameinfo.frame.f_locals[k] for k in sig.parameters}  # 只获取参数
+    sig = inspect.signature(frameinfo.frame.f_globals[frameinfo.function])  #  get the function signature
+    args = {k: frameinfo.frame.f_locals[k] for k in sig.parameters}  #  get parameters
     return args
 
 def get_functions(so_path):
@@ -24,10 +24,7 @@ def get_functions(so_path):
     return functions
 
 def is_dynamic_library(file_path):
-    # 获取文件扩展名
     _, file_extension = os.path.splitext(file_path)
-
-    # 判断扩展名是否为动态库的常见扩展名
     dynamic_library_extensions = ['.dll', '.so', '.dylib']
     return file_extension.lower() in dynamic_library_extensions
 
@@ -35,11 +32,11 @@ def is_dynamic_library(file_path):
 def easycpp(code_or_so, so_dir="", func_signatures=None, compiler="g++ -O2 -shared -fPIC"):
     if DEBUG:
         for frame in inspect.stack():
-            print(frame.function, frame.filename)  # 打印调用栈中的函数名
+            print(frame.function, frame.filename)
 
     caller = inspect.stack()[1]
     if caller.filename == "<string>":
-        # using exec
+        # when using exec in precompile.py
         caller = inspect.stack()[2]
 
     prebuild = False
@@ -61,7 +58,7 @@ def easycpp(code_or_so, so_dir="", func_signatures=None, compiler="g++ -O2 -shar
     if len(code_or_so) < 256 and is_dynamic_library(code_or_so):
         so_path = code_or_so
         if not os.path.exists(so_path):
-            raise FileNotFoundError(f"共享库文件不存在: {so_path}")
+            raise FileNotFoundError(f"the shared library file does not exist : {so_path}")
     else:
         tohash = compiler + code_or_so
         code_hash = hashlib.md5(tohash.encode()).hexdigest()
@@ -76,9 +73,9 @@ def easycpp(code_or_so, so_dir="", func_signatures=None, compiler="g++ -O2 -shar
             result = subprocess.run(compile_cmd, shell=True, capture_output=True, text=True)
 
             if result.returncode != 0:
-                raise RuntimeError(f"C++ 编译失败: {result.stderr}")
+                raise RuntimeError(f"compilation failed : {result.stderr}")
 
-            if DEBUG: print(f"编译成功: {so_path}")
+            if DEBUG: print(f"compiled successfully : {so_path}")
 
     if not prebuild:
         lib = ctypes.CDLL(so_path)
@@ -96,10 +93,10 @@ def easycpp(code_or_so, so_dir="", func_signatures=None, compiler="g++ -O2 -shar
                 try:
                     func = getattr(lib, func_name)
                 except AttributeError:
-                    raise RuntimeError(f"共享库未正确导出函数: {func_name}")
+                    raise RuntimeError(f"the shared library does not export the function correctly : {func_name}")
 
                 r.__dict__[func_name] = func
-                if DEBUG: print(f"已注册 C++ 函数: {func_name}:{func}")
+                if DEBUG: print(f"registered function : {func_name}:{func}")
 
         return r
 

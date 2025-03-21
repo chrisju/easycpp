@@ -11,34 +11,34 @@ import easycpp
 easycpp.DEBUG = True
 
 def extract_cpp_code(py_file):
-    """从 Python 文件中提取 C++ 代码块"""
+    """ from  Python  extract from the file  C++  code block """
     with open(py_file, "r", encoding="utf-8") as f:
         content = f.read()
     
-    # 解析 `easycpp('...'` 形式的 C++ 代码块
+    #  get `easycpp('...'`  code block
     pattern = r"easycpp\(\s*('''.*?'''|\"\"\".*?\"\"\")\s*(,.*?\)|\))"
     matches = re.finditer(pattern, content, re.DOTALL)
     return [match.group(0) for match in matches]
 
 def precompile(py_file):
-    """预编译 Python 文件中的 C++ 代码"""
+    """ precompiled C++ code in the python file """
     blocks = extract_cpp_code(py_file)
     if blocks:
-        print(f"发现 C++ 代码，开始编译: {py_file}")
+        print(f"C++ code found, compiling : {py_file}")
         for block in blocks:
             exec('easycpp.' + block)
-        print(f"预编译完成: {py_file}")
+        print(f"precompilation is completed : {py_file}")
     else:
-        print(f"未发现 C++ 代码: {py_file}")
+        print(f"can not found  C++  code : {py_file}")
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("用法: python precompile.py <your_script.py>")
+        print("usage : python precompile.py <your_script.py>")
         sys.exit(1)
     
     for py_file in sys.argv[1:]:
         if not os.path.exists(py_file):
-            print(f"文件不存在: {py_file}")
+            print(f"file does not exist : {py_file}")
             sys.exit(1)
 
         precompile(py_file)
