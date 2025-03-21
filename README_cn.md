@@ -1,26 +1,30 @@
-## Description
+# easycpp
 
-To use C/C++ conveniently in Python
+## 描述
 
-## Functional Features
+为了在python中便利地使用C/C++
 
-- **Support for embedding C++ functions in .py files**: It is convenient to use embedded C++ functions instead of Python functions to accelerate code execution.
-- **Calling dynamic libraries**: Similar to ctypes.CDLL
+## 功能特性
 
-## Dependencies
+- **支持.py中内嵌c++函数**：可便利地使用内嵌的c++函数代替python函数以实现代码加速。
+- **调用动态库**：同ctypes.CDLL
+
+## 依赖项
+
+在安装项目之前，请确保已经安装了以下依赖项：
 
 - Python >= 3.7
 - pip
 
-## Installation
+## 安装
 
 ```bash
 $ pip install easycpp
 ```
 
-## Usage Examples
+## 使用示例
 
-Use the easycpp module to insert C++ code in a .py file. test.py:
+1. 使用easycpp模块在.py中插入C++代码。test.py:
 
 ```python
 import sys, os
@@ -62,7 +66,7 @@ rn = cpp.sieve(n)
 print(f'count:{rn}')
 ```
 
-2. Run like normal Python code:
+2. 像普通python代码一样运行
 
 ```bash
 $ python3 test.py
