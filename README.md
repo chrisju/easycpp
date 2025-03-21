@@ -67,3 +67,7 @@ print(f'count:{rn}')
 ```bash
 $ python3 test.py
 ```
+
+## Attention
+
+Must specify parameter `func_signatures` on Windows.

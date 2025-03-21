@@ -30,7 +30,6 @@ $ pip install easycpp
 import sys, os
 from easycpp import easycpp
 
-
 cpp = easycpp('''
 #include <vector>
 using namespace std;
@@ -56,8 +55,6 @@ int sieve(int n) {
     }
     return rn;
 }
-
-
 ''')
 
 
@@ -71,3 +68,7 @@ print(f'count:{rn}')
 ```bash
 $ python3 test.py
 ```
+
+## 注意事项
+
+windows下用不了 `nm -D --defined-only` 需手动指定 `func_signatures` 参数
