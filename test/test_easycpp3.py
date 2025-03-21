@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-# 测试多段c++代码,以及so
+# 测试多段c++代码,以及so (必须先运行test/test_easycpp.py)
 import sys, os
 import timeit
 from ctypes import POINTER, c_int, byref
