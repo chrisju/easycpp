@@ -23,6 +23,14 @@ def get_functions(so_path):
     functions = [line.split()[-1] for line in functions]
     return functions
 
+def is_dynamic_library(file_path):
+    # 获取文件扩展名
+    _, file_extension = os.path.splitext(file_path)
+
+    # 判断扩展名是否为动态库的常见扩展名
+    dynamic_library_extensions = ['.dll', '.so', '.dylib']
+    return file_extension.lower() in dynamic_library_extensions
+
 
 def easycpp(code_or_so, so_dir="", func_signatures=None, compiler="g++ -O2 -shared -fPIC"):
     if DEBUG:
@@ -50,7 +58,7 @@ def easycpp(code_or_so, so_dir="", func_signatures=None, compiler="g++ -O2 -shar
         # if is a relative path, curdir must be same for precompile and run
         so_dir = os.path.abspath(os.path.expanduser(so_dir))
 
-    if len(code_or_so) < 256 and code_or_so.endswith(".so"):
+    if len(code_or_so) < 256 and is_dynamic_library(code_or_so.endswith):
         so_path = code_or_so
         if not os.path.exists(so_path):
             raise FileNotFoundError(f"共享库文件不存在: {so_path}")

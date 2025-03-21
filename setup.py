@@ -5,8 +5,8 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 # TODO README
 # TODO translate
-# TODO 中文逗号会翻译吗
-# TODO mini python version
+# TODO 中文逗号句号等会翻译吗？看README
+# TODO 测试其他python
 setup(
     name="easycpp",  # 模块的名称
     version="1.0.0",  # 版本号
@@ -21,6 +21,6 @@ setup(
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",  # 或其他许可证
     ],
-    python_requires=">=3.6",  # Python 版本要求
+    python_requires=">=3.7",  # Python 版本要求
 )
 
