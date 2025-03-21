@@ -58,7 +58,7 @@ def easycpp(code_or_so, so_dir="", func_signatures=None, compiler="g++ -O2 -shar
         # if is a relative path, curdir must be same for precompile and run
         so_dir = os.path.abspath(os.path.expanduser(so_dir))
 
-    if len(code_or_so) < 256 and is_dynamic_library(code_or_so.endswith):
+    if len(code_or_so) < 256 and is_dynamic_library(code_or_so):
         so_path = code_or_so
         if not os.path.exists(so_path):
             raise FileNotFoundError(f"共享库文件不存在: {so_path}")
