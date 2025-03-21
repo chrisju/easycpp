@@ -59,6 +59,8 @@ def easycpp(code_or_so, so_dir="", func_signatures=None, compiler="g++ -O2 -shar
         so_path = code_or_so
         if not os.path.exists(so_path):
             raise FileNotFoundError(f"the shared library file does not exist : {so_path}")
+        if not os.path.dirname(so_path):
+            so_path = f"./{so_path}"
     else:
         tohash = compiler + code_or_so
         code_hash = hashlib.md5(tohash.encode()).hexdigest()
