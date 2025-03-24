@@ -5,10 +5,9 @@ import re
 import os
 import sys
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "easycpp")))
+#sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "easycpp")))
 import easycpp
 
-easycpp.DEBUG = True
 
 def extract_cpp_code(py_file):
     """ from  Python  extract from the file  C++  code block """
@@ -28,18 +27,29 @@ def precompile(py_file):
         for block in blocks:
             exec('easycpp.' + block)
         print(f"precompilation is completed : {py_file}")
+        return 0
     else:
         print(f"can not found  C++  code : {py_file}")
+        return 1
 
-if __name__ == "__main__":
+def main():
     if len(sys.argv) < 2:
-        print("usage : python precompile.py <your_script.py>")
-        sys.exit(1)
+        print("usage : python precompile.py <your_script.py> ...")
+        return 1
     
+    easycpp.DEBUG = True
     for py_file in sys.argv[1:]:
         if not os.path.exists(py_file):
             print(f"file does not exist : {py_file}")
-            sys.exit(1)
+            continue
+        if not os.path.splitext(py_file)[1] == '.py':
+            print(f"not .py file : {py_file}")
+            continue
 
         precompile(py_file)
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
 
