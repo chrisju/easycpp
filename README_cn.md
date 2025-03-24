@@ -69,6 +69,30 @@ print(f'count:{rn}')
 $ python3 test.py
 ```
 
+## 性能
+计算质数时可获得20倍加速。
+
+test/testeasycpp.py 输出:
+
+```
+python:sieve(1000000)
+count:78498
+cpp: sieve(1000000)
+count:78498
+python:sieve(1000000)
+1. : 41969.04803393409  microseconds
+2. : 40655.971970409155  microseconds
+3. : 40405.491017736495  microseconds
+4. : 40510.52400609478  microseconds
+5. : 40443.39497340843  microseconds
+cpp: sieve(1000000)
+1. : 1861.8699978105724  microseconds
+2. : 1843.6360405758023  microseconds
+3. : 1847.2519586794078  microseconds
+4. : 1861.9759939610958  microseconds
+5. : 1847.1599905751646  microseconds
+```
+
 ## 注意事项
 
 windows下用不了 `nm -D --defined-only` 需手动指定 `func_signatures` 参数
