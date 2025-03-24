@@ -1,2 +1,2 @@
-from .easycpp import easycpp, Easycpp, DEBUG
+from .easycpp import easycpp, Easycpp, debugon, debugoff
 

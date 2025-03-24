@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 # 测试多段c++代码,以及so (必须先运行test/test_easycpp.py)
-# TODO DEBUG=True无效
 import sys, os
 import timeit
 from ctypes import POINTER, c_int, byref
@@ -12,7 +11,7 @@ from easycpp import easycpp
 import easycpp as esp
 
 
-esp.DEBUG = True
+esp.debugon()
 cpp1 = easycpp('''
 #include <vector>
 using namespace std;

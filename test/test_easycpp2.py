@@ -10,7 +10,7 @@ from ctypes import POINTER, c_int, byref
 import easycpp
 
 
-easycpp.DEBUG = True
+easycpp.debugon()
 cpp = easycpp.easycpp('''
 #include <vector>
 using namespace std;

@@ -10,6 +10,14 @@ DEBUG = False
 class Easycpp:
     pass
 
+def debugon():
+    global DEBUG
+    DEBUG = True
+
+def debugoff():
+    global DEBUG
+    DEBUG = False
+
 def get_caller_args():
     frameinfo = inspect.stack()[3]
     sig = inspect.signature(frameinfo.frame.f_globals[frameinfo.function])  #  get the function signature
@@ -30,9 +38,9 @@ def is_dynamic_library(file_path):
 
 
 def easycpp(code_or_so, so_dir="", func_signatures=None, compiler="g++ -O2 -shared -fPIC"):
-    if DEBUG:
-        for frame in inspect.stack():
-            print(frame.function, frame.filename)
+    #if DEBUG:
+    #    for frame in inspect.stack():
+    #        print(frame.function, frame.filename)
 
     caller = inspect.stack()[1]
     if caller.filename == "<string>":
