@@ -1,1 +1,1 @@
-from .precompile import main
+from .main import main

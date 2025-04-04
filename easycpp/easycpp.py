@@ -1,12 +1,3 @@
-"""
-This module provides utility functions for c/c++ code.
-
-Functions:
-- easycpp(code_or_so, so_dir, func_signatures, compiler): Convert c/c++ functions to python functions.
-- debugon(): Debug prints on.
-- debugoff(): Debug prints off.
-"""
-
 import os
 import sys
 import hashlib
@@ -33,6 +24,16 @@ def debugon():
 def debugoff():
     global DEBUG
     DEBUG = False
+
+def get_library_suffix():
+    if sys.platform.startswith('win'):
+        return 'dll'
+    elif sys.platform.startswith('linux'):
+        return 'so'
+    elif sys.platform.startswith('darwin'):
+        return 'dylib'
+    else:
+        raise ValueError('Unsupported platform')
 
 def get_caller_args():
     frameinfo = inspect.stack()[3]
@@ -101,7 +102,7 @@ def easycpp(code_or_so, so_dir="", func_signatures=None, compiler="g++ -O2 -shar
     else:
         tohash = compiler + code_or_so
         code_hash = hashlib.md5(tohash.encode()).hexdigest()
-        so_path = os.path.join(so_dir, f"easycpp_{code_hash}.so")
+        so_path = os.path.join(so_dir, f"easycpp_{code_hash}.{get_library_suffix()}")
 
         if not os.path.exists(so_path):
             cpp_file = os.path.join(so_dir, f"easycpp_{code_hash}.cpp")

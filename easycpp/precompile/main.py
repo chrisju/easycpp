@@ -4,6 +4,8 @@
 import re
 import os
 import sys
+import argparse
+
 
 #sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "easycpp")))
 import easycpp
@@ -33,12 +35,12 @@ def precompile(py_file):
         return 1
 
 def main():
-    if len(sys.argv) < 2:
-        print("usage : python precompile.py <your_script.py> ...")
-        return 1
-    
+    parser = argparse.ArgumentParser(description='Precompile c/c++ code in .py')
+    parser.add_argument('file', nargs='+', help='.py files contain c/c++ code')
+    args = parser.parse_args()
+ 
     easycpp.DEBUG = True
-    for py_file in sys.argv[1:]:
+    for py_file in args.file:
         if not os.path.exists(py_file):
             print(f"file does not exist : {py_file}")
             continue
