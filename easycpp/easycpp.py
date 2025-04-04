@@ -1,3 +1,12 @@
+"""
+This module provides utility functions for c/c++ code.
+
+Functions:
+- easycpp(code_or_so, so_dir, func_signatures, compiler): Convert c/c++ functions to python functions.
+- debugon(): Debug prints on.
+- debugoff(): Debug prints off.
+"""
+
 import os
 import sys
 import hashlib
@@ -8,6 +17,13 @@ import inspect
 DEBUG = False
 
 class Easycpp:
+    """
+    Result of c/c++ code.
+
+    Members:
+    - _lib: Object of ctypes.CDLL.
+    - <xxx>: c function in c/c++ code.
+    """
     pass
 
 def debugon():
@@ -38,6 +54,19 @@ def is_dynamic_library(file_path):
 
 
 def easycpp(code_or_so, so_dir="", func_signatures=None, compiler="g++ -O2 -shared -fPIC"):
+    """
+    Convert c/c++ functions to python functions.
+
+    Args:
+        code_or_so (str): Code or path of dynamic library.
+        so_dir (str): Dir to save dynamic library for the c/c++ code. If is None or empty string, save into dir same as the .py who calls me.
+        func_signatures (str): Functions to export. Export all functions in dynamic library when is None.
+        compiler (str): Compile string for the c/c++ code.
+
+    Returns:
+        Easycpp: Contains exported functions of the c/c++ code.
+    """
+
     #if DEBUG:
     #    for frame in inspect.stack():
     #        print(frame.function, frame.filename)
