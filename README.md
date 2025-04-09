@@ -1,3 +1,5 @@
+「[简体中文](./README_cn.md)」|「English」
+
 ## Description
 
 To use C/C++ conveniently in Python
